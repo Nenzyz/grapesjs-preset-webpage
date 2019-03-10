@@ -154,6 +154,12 @@
     aceeditor.setTheme("ace/theme/ambiance");
     aceeditor.session.setMode("ace/mode/json");
 
+    // swig.setExtension('trans', function (v) { return translate(v); });
+    // function compileTrans(compiler, args, content, parent, options) {
+    //   return '_output += _ext.trans(' + args[0] + ');'
+    // };
+    // swig.setTag('trans', parseTrans, compileTrans, true);
+
     function getJSONValue() {
       try {
         return JSON.parse(aceeditor.getValue());
