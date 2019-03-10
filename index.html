@@ -1,101 +1,268 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>GrapesJS Preset Webpage</title>
-    <link href="https://unpkg.com/grapesjs/dist/css/grapes.min.css" rel="stylesheet">
-    <link href="dist/grapesjs-preset-webpage.min.css" rel="stylesheet">
-    <script src="//feather.aviary.com/imaging/v3/editor.js"></script>
-    <script src="https://static.filestackapi.com/v3/filestack-0.1.10.js"></script>
-    <script src="https://unpkg.com/grapesjs"></script>
-    <script src="dist/grapesjs-preset-webpage.min.js"></script>
+
+<head>
+  <meta charset="utf-8">
+  <title>GrapesJS Preset Webpage</title>
+  <link href="https://unpkg.com/grapesjs/dist/css/grapes.min.css" rel="stylesheet">
+  <link href="dist/grapesjs-preset-webpage.min.css" rel="stylesheet">
+  <script src="//feather.aviary.com/imaging/v3/editor.js"></script>
+  <script src="https://static.filestackapi.com/v3/filestack-0.1.10.js"></script>
+  <script src="https://unpkg.com/grapesjs"></script>
+  <script src="swig.js"></script>
+  <script src="dist/grapesjs-preset-webpage.min.js"></script>
+  <script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
+  <!-- Based on https://github.com/artf/grapesjs/issues/1162 -->
+  <style>
+    body,
+    html {
+      height: 100%;
+      margin: 0;
+    }
+    #json-editor { 
+        position: absolute;
+        top: 70px;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+    .gjs-pn-options {
+      right: 20%;
+      top: 0;
+    }
+    .gjs-pn-views {
+      border-bottom: 2px solid rgba(0,0,0,0.2);
+      right: 0;
+      width: 20%;
+      z-index: 4;
+    }
+    .gjs-pn-views-container {
+      height: 100%;
+      padding: 42px 0 0;
+      right: 0;
+      width: 20%;
+      overflow: auto;
+      box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="editor-container">
+    <!-- <button value="ok" onclick="editor.DomComponents.getWrapper().toHTML();"></button> -->
+  <div id="json-editor">{
+  "object": "World",
+  "elements": [
+    {"name": "This", "index": 0, "collapsed":true},
+    {"name": "That", "index": 1, "collapsed":false}
+  ]
+}</div>
+  </div>
+  <div id="gjs" style="height:0px; overflow:hidden">
+    <div class="panel">
+      <h1 class="welcome">Welcome to</h1>
+      <div class="big-title">
+        <svg class="logo" viewBox="0 0 100 100">
+          <path
+            d="M40 5l-12.9 7.4 -12.9 7.4c-1.4 0.8-2.7 2.3-3.7 3.9 -0.9 1.6-1.5 3.5-1.5 5.1v14.9 14.9c0 1.7 0.6 3.5 1.5 5.1 0.9 1.6 2.2 3.1 3.7 3.9l12.9 7.4 12.9 7.4c1.4 0.8 3.3 1.2 5.2 1.2 1.9 0 3.8-0.4 5.2-1.2l12.9-7.4 12.9-7.4c1.4-0.8 2.7-2.2 3.7-3.9 0.9-1.6 1.5-3.5 1.5-5.1v-14.9 -12.7c0-4.6-3.8-6-6.8-4.2l-28 16.2" />
+        </svg>
+        <span>GrapesJS</span>
+      </div>
+      <div class="description">
+        This is a demo content from index.html. For the development, you shouldn't edit this file, instead you can
+        copy and rename it to _index.html, on next server start the new file will be served, and it will be ignored by
+        git.
+      </div>
+    </div>
     <style>
-      body,
-      html {
-        height: 100%;
-        margin: 0;
+      .panel {
+        width: 90%;
+        max-width: 700px;
+        border-radius: 3px;
+        padding: 30px 20px;
+        margin: 150px auto 0px;
+        background-color: #d983a6;
+        box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.25);
+        color: rgba(255, 255, 255, 0.75);
+        font: caption;
+        font-weight: 100;
+      }
+
+      .welcome {
+        text-align: center;
+        font-weight: 100;
+        margin: 0px;
+      }
+
+      .logo {
+        width: 70px;
+        height: 70px;
+        vertical-align: middle;
+      }
+
+      .logo path {
+        pointer-events: none;
+        fill: none;
+        stroke-linecap: round;
+        stroke-width: 7;
+        stroke: #fff
+      }
+
+      .big-title {
+        text-align: center;
+        font-size: 3.5rem;
+        margin: 15px 0;
+      }
+
+      .description {
+        text-align: justify;
+        font-size: 1rem;
+        line-height: 1.5rem;
       }
     </style>
-  </head>
-  <body>
+  </div>
+  
 
-    <div id="gjs" style="height:0px; overflow:hidden">
-      <div class="panel">
-        <h1 class="welcome">Welcome to</h1>
-        <div class="big-title">
-          <svg class="logo" viewBox="0 0 100 100">
-            <path d="M40 5l-12.9 7.4 -12.9 7.4c-1.4 0.8-2.7 2.3-3.7 3.9 -0.9 1.6-1.5 3.5-1.5 5.1v14.9 14.9c0 1.7 0.6 3.5 1.5 5.1 0.9 1.6 2.2 3.1 3.7 3.9l12.9 7.4 12.9 7.4c1.4 0.8 3.3 1.2 5.2 1.2 1.9 0 3.8-0.4 5.2-1.2l12.9-7.4 12.9-7.4c1.4-0.8 2.7-2.2 3.7-3.9 0.9-1.6 1.5-3.5 1.5-5.1v-14.9 -12.7c0-4.6-3.8-6-6.8-4.2l-28 16.2"/>
-          </svg>
-          <span>GrapesJS</span>
-        </div>
-        <div class="description">
-          This is a demo content from index.html. For the development, you shouldn't edit this file, instead you can
-          copy and rename it to _index.html, on next server start the new file will be served, and it will be ignored by git.
-        </div>
-      </div>
-      <style>
-        .panel {
-          width: 90%;
-          max-width: 700px;
-          border-radius: 3px;
-          padding: 30px 20px;
-          margin: 150px auto 0px;
-          background-color: #d983a6;
-          box-shadow: 0px 3px 10px 0px rgba(0,0,0,0.25);
-          color:rgba(255,255,255,0.75);
-          font: caption;
-          font-weight: 100;
+  <script type="text/javascript">
+    var djtmpl = "<div swig='true'>Hello {{ object }} \
+      {% for element in elements %} \
+      <div>Here are {{ element.name }}</div> \
+      {% endfor %}</div>";
+
+    var editor = grapesjs.init({
+      height: '100%',
+      showOffsets: 1,
+      noticeOnUnload: 0,
+      storageManager: { autoload: 0 },
+      container: '#gjs',
+      fromElement: true,
+
+      plugins: ['gjs-preset-webpage'],
+      pluginsOpts: {
+        'gjs-preset-webpage': {}
+      }
+    });
+
+    editor.BlockManager.add('swig', {
+      label: 'Swig',
+      content: {
+        type: 'swig',
+        template: djtmpl
+      }
+    });
+    var aceeditor = ace.edit("json-editor");
+    aceeditor.setTheme("ace/theme/ambiance");
+    aceeditor.session.setMode("ace/mode/json");
+
+    function getJSONValue() {
+      try {
+        return JSON.parse(aceeditor.getValue());
+      } catch {
+        console.error("Wrong JSON: ", aceeditor.getValue());
+        throw "Wrong JSON!";
+      }
+    }
+
+    var comps = editor.DomComponents;
+
+    // Get the model and the view from the default Component type
+    var defaultType = comps.getType('default');
+    var defaultModel = defaultType.model;
+    var defaultView = defaultType.view;
+    var mycomp = undefined;
+
+    comps.addType('swig', {
+      model: defaultModel.extend({
+        defaults: {
+          ...defaultModel.prototype.defaults,
+          droppable: true,
+          editable: true
+        },
+        init() {
+          // If I have no components inside, I compile the template
+          // and it will be an editable content
+
+          this._template = this.get('template');
+          mycomp = this;
+          this.components(this._template);
+        },
+        toHTML() {
+          // If I have components I'll follow the original method
+          // otherwise return the template
+
+          // console.log("render: ", [this.render_swig, editor.render_swig]);
+          // console.log("template: ", this.get('template'));
+          // console.log("defaultModel: ", this._template);
+          var mytemplate = defaultModel.prototype.toHTML.apply(this, arguments)
+            .replace(/^<div>/,"")
+            .replace(/<\/div>$/, "");
+          if (!editor.render_swig && !this.render_swig) this._template = mytemplate;
+          if (editor.render_swig != this.render_swig) {
+            this.render_swig = editor.render_swig;
+            if (editor.render_swig){
+              var tmpl_fun = swig.compile(mytemplate);
+              console.log("mytemplate = ", mytemplate);
+              this.components(tmpl_fun(getJSONValue()));
+            } else {
+              console.log("this._template = ", this._template);
+              this.components(this._template);
+            };
+          }
+
+          if (editor.render_swig){
+            var tmpl_fun = swig.compile(mytemplate);
+            return tmpl_fun(getJSONValue());
+          } else {
+            return mytemplate;
+          }
+        }
+      },
+      {
+        // isComponent is mandatory when you define new components
+        isComponent(el) {
+          // Accept it only when `handlebars` type is explicitly requested
+          return false;
+        }
+      }),
+      view: defaultType.view
+    });
+
+    // Define commands
+    editor.Commands.add('dj-visibility', {
+      run(ed) {
+        ed.render_swig = true;
+        ed.DomComponents.getWrapper().toHTML();
+      },
+
+      stop(ed) {
+        ed.render_swig = false;
+        ed.DomComponents.getWrapper().toHTML();
+      }
+    });
+    editor.Commands.add('open-json', {
+      run(ed) {
+        const bm = editor.BlockManager;
+        const pn = editor.Panels;
+
+        if (!this.json) {
+          bm.render();
+          const id = 'views-container';
+          const json = document.createElement('div');
+          const panels = pn.getPanel(id) || pn.addPanel({ id });
+          json.appendChild(document.getElementById("editor-container"));
+          panels.set('appendContent', json).trigger('change:appendContent');
+          this.json = json;
         }
 
-        .welcome {
-          text-align: center;
-          font-weight: 100;
-          margin: 0px;
-        }
+        this.json.style.display = 'block';
+      },
 
-        .logo {
-          width: 70px;
-          height: 70px;
-          vertical-align: middle;
-        }
+      stop(ed) {
+        const json = this.json;
+        json && (json.style.display = 'none');
+      }
+    });
+  </script>
+</body>
 
-        .logo path {
-          pointer-events: none;
-          fill: none;
-          stroke-linecap: round;
-          stroke-width: 7;
-          stroke: #fff
-        }
-
-        .big-title {
-          text-align: center;
-          font-size: 3.5rem;
-          margin: 15px 0;
-        }
-
-        .description {
-          text-align: justify;
-          font-size: 1rem;
-          line-height: 1.5rem;
-        }
-      </style>
-    </div>
-
-
-    <script type="text/javascript">
-      var editor = grapesjs.init({
-        height: '100%',
-        showOffsets: 1,
-        noticeOnUnload: 0,
-        storageManager: { autoload: 0 },
-        container: '#gjs',
-        fromElement: true,
-
-        plugins: ['gjs-preset-webpage'],
-        pluginsOpts: {
-          'gjs-preset-webpage': {}
-        }
-      });
-    </script>
-  </body>
 </html>

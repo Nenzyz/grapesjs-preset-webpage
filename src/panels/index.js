@@ -12,11 +12,13 @@ export default (editor, config) => {
   const crc = 'create-comp';
   const mvc = 'move-comp';
   const swv = 'sw-visibility';
+  const dj  = 'dj-visibility';
   const expt = 'export-template';
   const osm = 'open-sm';
   const otm = 'open-tm';
   const ola = 'open-layers';
   const obl = 'open-blocks';
+  const ojson = 'open-json';
   const ful = 'fullscreen';
   const prv = 'preview';
 
@@ -28,6 +30,12 @@ export default (editor, config) => {
   },{
     id: 'options',
     buttons: [{
+        id: dj,
+        command: dj,
+        label: "Dj",
+        context: dj,
+        // className: 'fa fa-square-o',
+    },{
       id: swv,
       command: swv,
       context: swv,
@@ -82,6 +90,11 @@ export default (editor, config) => {
       id: obl,
       command: obl,
       className: 'fa fa-th-large',
+    },{
+      id: ojson,
+      command: ojson,
+      label: "{}"
+      // className: 'fa fa-th-large',
     }],
   }]);
 
